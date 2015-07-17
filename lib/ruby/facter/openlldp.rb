@@ -84,7 +84,8 @@ if File.exists?('/tmp/mk-update/bin/lldptool')
               end
             when 'portID'
               output.split("\n").each do |line|
-                result = $1 if line.match(/(?:Ifname|Local):\s+(.*)/)
+                ether = $1 if line.match(/MAC:\s+(.*)/)
+                result = Facter::Util::Macaddress.standardize(ether)
               end
             when 'mngAddr_ipv4'
               output.split("\n").each do |line|
